@@ -1,0 +1,67 @@
+
+<html lang="en-US">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body ng-app="shopApp">
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+<div class="container" ng-controller="SliderCtrl">
+    <ul class="topnav" id="myTopnav">
+        <li><a class="active" href="#products">Home</a></li>
+        <li><a href="#/basket">Zamówienia</a></li>
+        <li><a href="#/confirm">Rezerwacja</a></li>
+        <li><a href="#/administrate">Dla admina</a></li>
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+        </li>
+    </ul>
+    <div class="container slider" ng-controller="SliderCtrl">
+        <img ng-repeat="slide in slides" class="slide slide-animation nonDraggableImage"
+             ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
+             ng-hide="!isCurrentSlideIndex($index)" ng-src="{{slide.image}}">
+
+        <a class="arrow prev" href="#" ng-click="nextSlide()"></a>
+        <a class="arrow next" href="#" ng-click="prevSlide()"></a>
+        <nav class="nav">
+            <div class="wrapper">
+                <ul class="dots">
+                    <li class="dot" ng-repeat="slide in slides">
+                        <a href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
+                           ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="parallax" ng-view>
+
+    </div>
+</div>
+
+
+
+<script src="shopApp.js"></script>
+<script src="controllers.js"></script>
+<script src="app.js"></script>
+<script src="services.js"></script>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+</script>
+</body>
+</html>
