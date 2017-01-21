@@ -13,43 +13,12 @@ appControllers.filter('startFrom', function () {
     }
 });
 
-appControllers.controller('SliderCtrl', function ($scope) {
-    $scope.slides = [
-        {image: 'images/img00.jpg', description: 'Image 00'},
-        {image: 'images/img01.jpg', description: 'Image 01'},
-        {image: 'images/img02.jpg', description: 'Image 02'},
-        {image: 'images/img03.jpg', description: 'Image 03'},
-        {image: 'images/img04.jpg', description: 'Image 04'}
-    ];
 
-    $scope.direction = 'left';
-    $scope.currentIndex = 0;
-
-    $scope.setCurrentSlideIndex = function (index) {
-        $scope.direction = (index > $scope.currentIndex) ? 'left' : 'right';
-        $scope.currentIndex = index;
-    };
-
-    $scope.isCurrentSlideIndex = function (index) {
-        return $scope.currentIndex === index;
-    };
-
-    $scope.prevSlide = function () {
-        $scope.direction = 'left';
-        $scope.currentIndex = ($scope.currentIndex < $scope.slides.length - 1) ? ++$scope.currentIndex : 0;
-    };
-
-    $scope.nextSlide = function () {
-        $scope.direction = 'right';
-        $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.slides.length - 1;
-    };
-})
-
-appControllers.controller("AdminCtrl", ['$scope', '$http', 'Products', 'User', 'Users', function ($scope, $http, Products, User, Users) {
+appControllers.controller("AdminCtrl", ['$scope', '$http', 'ProductRest', 'User', 'Users', function ($scope, $http, ProductRest, User, Users) {
 
     $scope.users = [];
     $scope.users = Users.query();
-    $scope.products = Products.query();
+    $scope.products = ProductRest.query();
 
 
     $scope.addProduct = function () {
@@ -94,25 +63,57 @@ appControllers.controller("AdminCtrl", ['$scope', '$http', 'Products', 'User', '
 appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'ProductRest', 'AddProductRest', 'BuyRest', 'BasketStorage',
     function ($scope, $http, User, Users, ProductRest, AddProductRest, BuyRest, BasketStorage) {
 
-        $scope.shopingList = [];
-        $scope.basket = [];
-        $scope.activeUser = {};
-        $scope.users = Users.query();
-        $scope.products = ProductRest.query();
+
+        $scope.slides = [
+            {image: 'images/img00.jpg', description: 'Image 00'},
+            {image: 'images/img01.jpg', description: 'Image 01'},
+            {image: 'images/img02.jpg', description: 'Image 02'},
+            {image: 'images/img03.jpg', description: 'Image 03'},
+            {image: 'images/img04.jpg', description: 'Image 04'}
+        ];
+
+        $scope.direction = 'left';
+        $scope.currentIndex = 0;
+
+        $scope.setCurrentSlideIndex = function (index) {
+            $scope.direction = (index > $scope.currentIndex) ? 'left' : 'right';
+            $scope.currentIndex = index;
+        };
+
+        $scope.isCurrentSlideIndex = function (index) {
+            return $scope.currentIndex === index;
+        };
+
+        $scope.prevSlide = function () {
+            $scope.direction = 'left';
+            $scope.currentIndex = ($scope.currentIndex < $scope.slides.length - 1) ? ++$scope.currentIndex : 0;
+        };
+
+        $scope.nextSlide = function () {
+            $scope.direction = 'right';
+            $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.slides.length - 1;
+        };
 
 
-        $scope.active = 0;
-        $scope.outputData = [];
-        $scope.dateFrom = null;
-        $scope.dateTo = null;
 
 // Add a Item to the list
 
+        $scope.products = ProductRest.query();
+
+        $scope.productLog = function(){
+            console.log("Saved product:");
+            for (var i = 0; i < $scope.productList.length; i++) {
+                var currentProduct = $scope.productList[i];
+                console.log("Saved product: " + currentProduct.name + "\n");
+            }
+        };
         $scope.order = function (product) {
             $scope.shopingList.push(product);
             console.log(product.toString());
             BasketStorage.addProduct(product)
         };
+
+
 
 
 // Get Total Items
@@ -126,7 +127,7 @@ appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'P
 
 // Paginate
         $scope.currentPage = 0;
-        $scope.pageSize = 3;
+        $scope.pageSize = 9;
         $scope.numberOfPages = function () {
             return Math.ceil($scope.products.length / $scope.pageSize);
         };
@@ -155,6 +156,8 @@ appControllers.controller("postController", ['$scope', '$http', 'User', 'Users',
         $scope.activeUser = {};
         $scope.productList = BasketStorage.getProducts();
         // calling our submit function.
+
+
 
         $scope.submitForm = function () {
             // geting existing user or creating new one.

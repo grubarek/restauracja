@@ -1,9 +1,10 @@
 body {
-    background-image: url("../assets/img/tlo.jpg") !important;
+    background: navajowhite;
     margin-top: 50px !important;
     margin-bottom: 100px;
     margin-right: 150px;
     margin-left: 80px;
+
 }
 
 head {
@@ -12,6 +13,10 @@ head {
 
 .paginate-table {
     position: center;
+}
+
+.paginate {
+    align-self: center;
 }
 
 .color-red{
@@ -107,11 +112,9 @@ ul.topnav li.icon {display: none;}
 
 }
 
-
-
 .parallax {
     /* The image used */
-    background: antiquewhite;
+    background-image: url("../assets/img/tlo.jpg") !important;
     /* Set a specific height */
     height: 500px;
 
@@ -120,4 +123,10 @@ ul.topnav li.icon {display: none;}
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.menu-content {
+    font-family: "Times New Roman", Times, serif;
+    font-size: large !important;
+    background: bisque;
 }

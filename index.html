@@ -1,4 +1,3 @@
-
 <html lang="en-US">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
@@ -10,11 +9,11 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body ng-app="shopApp">
+<body  class="parallax"  ng-app="shopApp">
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
-<div class="container" ng-controller="SliderCtrl">
+<div class="container" ng-controller="ProductCtrl">
     <ul class="topnav" id="myTopnav">
         <li><a class="active" href="#products">Home</a></li>
         <li><a href="#/basket">Zamówienia</a></li>
@@ -24,7 +23,7 @@
             <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
         </li>
     </ul>
-    <div class="container slider" ng-controller="SliderCtrl">
+    <div class="container slider" ng-controller="ProductCtrl">
         <img ng-repeat="slide in slides" class="slide slide-animation nonDraggableImage"
              ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
              ng-hide="!isCurrentSlideIndex($index)" ng-src="{{slide.image}}">
@@ -41,11 +40,9 @@
             </div>
         </nav>
     </div>
-    <div class="parallax" ng-view>
 
-    </div>
+    <div ng-view></div>
 </div>
-
 
 
 <script src="shopApp.js"></script>
