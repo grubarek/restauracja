@@ -14,7 +14,22 @@ appControllers.filter('startFrom', function () {
 });
 
 
-appControllers.controller("AdminCtrl", ['$scope', '$http', 'AddProductRest', function ($scope, $http, AddProductRest) {
+appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProductRest', function ($scope, $window, $http, AddProductRest) {
+
+    $scope.files = [];
+    $scope.file = {};
+
+    $scope.uploadFiles = function () {
+
+        var files = angular.copy($scope.files);
+
+        if ($scope.file) {
+            console.log("sucess: " + $scope.file.toString());
+        } else {
+            $window.alert('Please select files!');
+            return false;
+        }
+    };
 
     $scope.addProduct = function () {
         var newProduct = {
@@ -22,8 +37,8 @@ appControllers.controller("AdminCtrl", ['$scope', '$http', 'AddProductRest', fun
             description: $scope.description,
             name: $scope.name,
             category: $scope.category, //słownik ?
-            creationDate: data,
-            active: false
+            contentData: $scope.file.base64,
+            contentType: $scope.file.filetype
         };
         var data = new Date();
         newProduct.creationDate = data;
@@ -34,7 +49,7 @@ appControllers.controller("AdminCtrl", ['$scope', '$http', 'AddProductRest', fun
         $scope.description = '';
         $scope.art = '';
         $scope.category = '';
-        $scope.data = '';
+        $scope.data = "";
         $scope.active = '';
     };
 
@@ -148,17 +163,18 @@ appControllers.controller("postController", ['$scope', '$http', 'User', 'Users',
             User.query($scope.activeUser);
         };
 
-        $scope.sum =$scope.productList[0].price;
+        $scope.sum = 0;
 
         $scope.orderSum = function () {
-            var tempSum = $scope.productList[0].price;
-            // $scope.productList.forEach(function (item) {
-            //     item.price
-            //     console.log(tempSum + " add to sum " + item.price);
-            //     tempSum += item.price;
-            // });
-            $scope.sum = tempSum;
-            return tempSum;
+            if ($scope.productList != null) {
+                var tempSum = $scope.productList[0].price;
+                // $scope.productList.forEach(function (item) {
+                //     item.price
+                //     console.log(tempSum + " add to sum " + item.price);
+                //     tempSum += item.price;
+                // });
+                $scope.sum = tempSum;
+            }
         };
 
         $scope.saveBasket = function () {

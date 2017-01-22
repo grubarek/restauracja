@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h3>Formularz rezerwacji:</h3>
+<h3>Formularz zamówienia:</h3>
 
 <form>
 
@@ -14,18 +14,19 @@
         <label>Imię i nazwisko:</label>
         <input type="text" id="full_name" name="full_name" placeholder="Jan Kowalski" required>
 
-        <label>Adres e-mail:</label>
-        <input type="email" id="email_addr" name="email_addr" required>
+        <label>Miejscowość:</label>
+        <input type="text" id="city" name="city" required>
 
-        <label>Powtórnie wpisz adres e-mail:</label>
-        <input type="email" id="email_addr_repeat" name="email_addr_repeat" required
-               oninput="check(this)">
+        <label>ulica:</label>
+        <input type="text" id="street" name="street" required>
 
-        <label>Data:</label>
-        <input type="date" id="arrival_dt" name="arrival_dt" required>
+        <label>nr:</label>
+        <input type="text" id="house_no" name="house_no" required>
 
-        <label>Liczba osób:</label>
-        <input type="number" id="guests" name="guests" value="1" min="1" max="4" required>
+
+        <label>Data dostawy:</label>
+        <input type="datetime" id="arrival_time" name="arrival_time" required>
+
 
     </div>
 
@@ -49,7 +50,7 @@
         <th>Cena</th>
     </tr>
     <tr ng-repeat="product in productList">
-        <td><img src="img/chiny.jpg" width="420" height="240"/></td>
+        <td> <img src="data:{{product.contentType}};base64,{{product.contentData}}" width=100% /></td>
         <td>{{ product.description }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>

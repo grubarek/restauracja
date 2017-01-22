@@ -206,3 +206,12 @@ input[type=submit] {
     font-size: 40px;
     color:red;
 }
+
+.table-bordered{
+    border: none !important;
+    background: whitesmoke !important;
+}
+
+.form-control {
+    height: auto;
+}

@@ -1,4 +1,4 @@
-var shopApp = angular.module('shopApp', ['ngRoute', 'appControllers', 'appServices', 'ngAnimate']);
+var shopApp = angular.module('shopApp', ['ngRoute', 'appControllers', 'appServices', 'ngAnimate', 'naif.base64']);
 
 shopApp.animation('.fade', function() {
     return {
@@ -20,7 +20,7 @@ shopApp.animation('.fade', function() {
             });
         }
     }
-})
+});
 
 shopApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/products', {
