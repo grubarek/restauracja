@@ -75,7 +75,8 @@ appServices.factory('Reservation', ['$resource', function ($resource) {
 appServices.factory('OrderList', ['$resource', function ($resource) {
     return $resource('http://localhost:5000/order', {}, {
         query: {
-            method: 'GET'
+            method: 'GET',
+            isArray:true
         }
     });
 }

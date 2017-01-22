@@ -11,23 +11,27 @@
 <form>
 
     <label>Imię i nazwisko:</label>
-    <input type="text" id="full_name" name="full_name" placeholder="Jan Kowalski" required>
+    <input type="text" id="name" name="name" ng-model="firstName" placeholder="Jan " >
+
+    <label>Nazwisko:</label>
+    <input type="text" id="lastName" name="lastName" ng-model="lastName" placeholder=" Kowalski" >
 
     <label>Adres e-mail:</label>
-    <input type="email" id="email_addr" name="email_addr" required>
-
-    <label>Powtórnie wpisz adres e-mail:</label>
-    <input type="email" id="email_addr_repeat" name="email_addr_repeat" required
-           oninput="check(this)">
+    <input type="email" id="email_addr" name="email_addr" ng-model="email" >
 
     <label>Data:</label>
-    <input type="date" id="arrival_dt" name="arrival_dt" required>
+    <input type="date" id="date" name="date" ng-model="orderDate" >
+
+    <label>Stolik</label>:</label>
+    <input type="text" id="table" name="table" ng-model="table" >
 
     <label>Liczba osób:</label>
-    <input type="number" id="guests" name="guests" value="1" min="1" max="4" required>
+    <input type="number" id="guests" name="guests" value="1" min="1" max="4" ng-model="persons" >
 
+    <br>
+    <button class="button" ng-click="sendReservation()">
+        <i class="fa fa-shopping-cart"  aria-hidden="true">Wyślij</i> </button>
 
-    <input class="button-order" type="button" value="Rezerwuj" />
 </form>
 
 </div>

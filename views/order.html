@@ -11,21 +11,25 @@
 <form>
 
     <div class="order-client-data">
-        <label>Imię i nazwisko:</label>
-        <input type="text" id="full_name" name="full_name" placeholder="Jan Kowalski" required>
+        <label>Imię     :</label>
+        <input type="text" id="name" name="name" ng-model="first" placeholder="Jan " >
+
+        <label>Nazwisko:</label>
+        <input type="text" id="lastName" name="lastName" ng-model="last" placeholder=" Kowalski" >
 
         <label>Miejscowość:</label>
-        <input type="text" id="city" name="city" required>
+        <input type="text" id="city" name="city" ng-model="city" required>
 
         <label>ulica:</label>
-        <input type="text" id="street" name="street" required>
+        <input type="text" id="street" name="street" ng-model="street" required>
+
 
         <label>nr:</label>
-        <input type="text" id="house_no" name="house_no" required>
+        <input type="text" id="house_no" name="house_no" ng-model="houseNo" required>
 
 
         <label>Data dostawy:</label>
-        <input type="datetime" id="arrival_time" name="arrival_time" required>
+        <input type="date" id="arrival_time" name="arrival_time" ng-model="orderTime" required>
 
 
     </div>
@@ -38,7 +42,8 @@
     </div>
 
 
-    <input class="button-order" type="button" value="Potwiedz"/>
+    <button class="button" ng-click="sendOrder()">
+        <i class="fa fa-shopping-cart"  aria-hidden="true">Potwierdz</i> </button>
 </form>
 
 
@@ -54,9 +59,9 @@
         <td>{{ product.description }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
-        <td><button class="button" ng-click="removeProductOrder(product)"><i class="fa fa-shopping-cart"  aria-hidden="true">Usuń</i>
+        <td><button class="button" ng-click="removeProductOrder(product)">
+            <i class="fa fa-shopping-cart"  aria-hidden="true">Usuń</i> </button>
     </tr>
-
 
 </table>
 

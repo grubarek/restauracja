@@ -14,12 +14,17 @@ appControllers.filter('startFrom', function () {
 });
 
 
-appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProductRest', 'ProductRest', 'Products',
-    function ($scope, $window, $http, AddProductRest, ProductRest, Products) {
+appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProductRest', 'ProductRest', 'Products', 'OrderList', 'Reservation',
+    function ($scope, $window, $http, AddProductRest, ProductRest, Products, OrderList, Reservation) {
 
         $scope.files = [];
         $scope.file = {};
         $scope.productList = Products.query();
+        $scope.reservatons = Reservation.query();
+        $scope.orderList = OrderList.query();
+
+        $scope.showAdminOrder = false;
+        $scope.showAdminReservation = false;
 
         $scope.uploadFiles = function () {
 
@@ -52,6 +57,7 @@ appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProduc
             newProduct.creationDate = data;
             //TODO dodanie do db.
             AddProductRest.addProduct(newProduct);
+            $window.alert("Dodano !!!");
             // Clear input fields after push
             $scope.price = '';
             $scope.description = '';
@@ -158,8 +164,8 @@ appControllers.controller("ProductCtrl", ['$scope', '$http', 'ProductRest', 'Pro
 
     }]);
 
-appControllers.controller("OrderCtrl", ['$scope', '$http', 'Order', 'OrderList', 'ProductRest', 'BuyOrder', 'BasketStorage',
-    function ($scope, $http, Order, OrderList, ProductRest, BuyOrder, BasketStorage) {
+appControllers.controller("OrderCtrl", ['$scope', '$http', '$window', 'Order', 'OrderList', 'ProductRest', 'BuyOrder', 'BasketStorage', 'Reservation',
+    function ($scope, $http, $window, Order, OrderList, ProductRest, BuyOrder, BasketStorage, Reservation) {
 
         $scope.productList = BasketStorage.getProducts();
         // calling our submit function.
@@ -178,29 +184,56 @@ appControllers.controller("OrderCtrl", ['$scope', '$http', 'Order', 'OrderList',
             return tempSum;
         };
 
-        $scope.saveBasket = function () {
-            for (var i = 0; i < $scope.productList.length; i++) {
-                var currentProduct = $scope.productList[i];
-                console.log("Saved product: " + currentProduct.name + "\n");
-                if ($scope.activeUser != null) {
-                    User.query($scope.activeUser);
-                    var users = Users.query();
-                    console.log("Active user: " + $scope.activeUser.lastName);
-
-                    for (var j = 0; i < users.length; j++) {
-                        console.log(users[j].nick);
-                        if (users[j].nick.isEqual($scope.activeUser.nick)) {
-                            $scope.activeUser._id = users[j]._id;
-                        }
-                    }
-                }
-                var currentBasket = {
-                    userId: $scope.activeUser._id,
-                    productId: currentProduct._id
-                };
-                BuyOrder.buyQuery(currentBasket);
-                $scope.basket.push(currentBasket);
-            }
+        $scope.sendReservation = function () {
+            var newReservation = {
+                firstName: $scope.firstName,
+                lastName: $scope.lastName,
+                email: $scope.email,
+                reservationDate: $scope.reservationDate,
+                persons: $scope.persons,
+                table: $scope.table
+            };
+            Reservation.addReservation(newReservation);
+            // Clear input fields after push
+            $scope.firstName = '';
+            $scope.lastName = '';
+            $scope.email = '';
+            $scope.reservationDate = '';
+            $scope.persons = '';
+            $scope.table = '';
+            $window.alert("Zamowiono !!!");
         };
+
+        $scope.sendOrder = function () {
+            // var productsToSend = [];
+            // var product = {};
+            // for (var i=0; $scope.productList.length ; i++) {
+            //     product = $scope.productList[i];
+            //     product.contentData = "";
+            //     product.contentType = "";
+            //     productsToSend.push(product);
+            // }
+            var newOrder = {
+                firstName: $scope.first,
+                lastName: $scope.last,
+                city: $scope.city,
+                zipCode: $scope.zipCode,
+                street: $scope.street,
+                localNumber: $scope.houseNo,
+                orderTime: $scope.orderTime,
+                products: $scope.productList
+            };
+            BuyOrder.buyQuery(newOrder);
+            // Clear input fields after push
+            $scope.first = '';
+            $scope.last = '';
+            $scope.city = '';
+            $scope.street = '';
+            $scope.houseNo = '';
+            $scope.orderTime = '';
+            $window.alert("Zamowiono !!!");
+        };
+
+
     }]);
 

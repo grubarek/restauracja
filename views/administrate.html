@@ -5,14 +5,75 @@
     <title>Title</title>
 </head>
 <body>
+
+<h3>Zamowienia: {{orderList.length}}</h3>
+<label title="Pokaż zamówienia" class="switch">
+    <input type="checkbox" ng-model="showAdminOrder">
+    <div class="sliderSwich round"></div>
+</label>
+
+<div ng-show="showAdminOrder">
+
+    <table title="Dostępne potrawy" class="table table-bordered">
+        <tr>
+            <th>Imię Nazwisko</th>
+            <th>Adres</th>
+            <th>Data dostawy</th>
+            <th>Produkty</th>
+        </tr>
+        <tr ng-repeat="order in orderList">
+            <td>{{ order.firstName }} {{order.lastName}}</td>
+            <td>{{ order.city }} {{ order.street }} {{ order.localNumber }}</td>
+            <td>{{ order.orderTime }}</td>
+            <td>
+                <div ng-repeat="product in order.products">
+                    <output>{{product._id}}</output>
+                </div>
+            </td>
+
+        </tr>
+
+
+    </table>
+</div>
+
+<h3>Rezerwacje: {{reservatons.length}}</h3>
+<label title="Pokaż rezerwacje" class="switch">
+
+    <input type="checkbox" ng-model="showAdminReservation">
+    <div class="sliderSwich round"></div>
+</label>
+
+<div ng-show="showAdminReservation">
+
+    <table title="Dostępne potrawy" class="table table-bordered">
+        <tr>
+            <th>Imię Nazwisko</th>
+            <th>Stolik</th>
+            <th>Data</th>
+            <th>Email</th>
+        </tr>
+        <tr ng-repeat="reservation in reservatons">
+            <td>{{ reservation.firstName }} {{reservation.lastName}}</td>
+            <td>{{ reservation.table }} dla {{reservation.persons}} osób</td>
+            <td>{{ reservation.reservationDate }}</td>
+            <td>{{ reservation.email }}</td>
+        </tr>
+
+
+    </table>
+</div>
+
 <div id="addItem">
     <h3>Formularz dodawania menu:</h3>
     <input value="" type="text" placeholder="Nazwa" ng-model="name" required>
     <input value="" type="text" placeholder="Opis" ng-model="description" required>
-    <input value="" type="number" placeholder="Cena" ng-model="price" required value="0.00" step="0.01" min="0" pattern="[0-9]+(\.[0-9][0-9]?)?">
+    <input value="" type="number" placeholder="Cena" ng-model="price" required value="0.00" step="0.01" min="0"
+           pattern="[0-9]+(\.[0-9][0-9]?)?">
     <input value="" type="text" placeholder="Kategoria" ng-model="category" required>
-    <input class="form-control" type="file" ng-model="file" name="inputFile" base-sixty-four-input required maxsize="500" accept="image/*">
-    <button class="button" ng-click="addProduct()"><i class="fa fa-shopping-cart"  aria-hidden="true">Dodaj</i>
+    <input class="form-control" type="file" ng-model="file" name="inputFile" base-sixty-four-input required
+           maxsize="500" accept="image/*">
+    <button class="button" ng-click="addProduct()"><i class="fa fa-shopping-cart" aria-hidden="true">Dodaj</i>
     </button>
 </div>
 
@@ -27,16 +88,21 @@
             <th>Cena</th>
         </tr>
         <tr ng-repeat="product in productList">
-            <td> <img src="data:{{product.contentType}};base64,{{product.contentData}}" width=100% /></td>
+            <td><img src="data:{{product.contentType}};base64,{{product.contentData}}" width=100%/></td>
             <td>{{ product.description }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
-            <td><button class="button" ng-click="removeProduct(product)"><i class="fa fa-shopping-cart"  aria-hidden="true">Usuń</i>
-            </button></td>
+            <td>
+                <button class="button" ng-click="removeProduct(product)"><i class="fa fa-shopping-cart"
+                                                                            aria-hidden="true">Usuń</i>
+                </button>
+            </td>
         </tr>
 
 
     </table>
 </div>
+
+
 </body>
 </html>

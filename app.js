@@ -34,7 +34,7 @@ shopApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'OrderCtrl'
     }).when('/confirm', {
         templateUrl: 'views/confirm.html',
-        controller: 'ProductCtrl'
+        controller: 'OrderCtrl'
     }).when('/administrate', {
         templateUrl: 'views/administrate.html',
         controller: 'AdminCtrl'
