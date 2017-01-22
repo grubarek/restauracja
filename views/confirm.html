@@ -6,9 +6,30 @@
 </head>
 
 
-<div>
-    <h2>Rezerwacja Stolika</h2>
-    <p>Todo</p>
+<h3>Formularz rezerwacji:</h3>
+
+<form>
+
+    <label>Imię i nazwisko:</label>
+    <input type="text" id="full_name" name="full_name" placeholder="Jan Kowalski" required>
+
+    <label>Adres e-mail:</label>
+    <input type="email" id="email_addr" name="email_addr" required>
+
+    <label>Powtórnie wpisz adres e-mail:</label>
+    <input type="email" id="email_addr_repeat" name="email_addr_repeat" required
+           oninput="check(this)">
+
+    <label>Data:</label>
+    <input type="date" id="arrival_dt" name="arrival_dt" required>
+
+    <label>Liczba osób:</label>
+    <input type="number" id="guests" name="guests" value="1" min="1" max="4" required>
+
+
+    <input class="button-order" type="button" value="Rezerwuj" />
+</form>
+
 </div>
 </body>
 </html>

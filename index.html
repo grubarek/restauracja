@@ -13,7 +13,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
-<div class="container" ng-controller="ProductCtrl">
+<div class="container">
     <ul class="topnav" id="myTopnav">
         <li><a class="active" href="#products">Home</a></li>
         <li><a href="#/basket">Zamówienia</a></li>
@@ -23,7 +23,7 @@
             <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
         </li>
     </ul>
-    <div class="container slider" ng-controller="ProductCtrl">
+    <div class="container slider" ng-controller="SliderCtrl">
         <img ng-repeat="slide in slides" class="slide slide-animation nonDraggableImage"
              ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
              ng-hide="!isCurrentSlideIndex($index)" ng-src="{{slide.image}}">
@@ -41,7 +41,7 @@
         </nav>
     </div>
 
-    <div ng-view></div>
+    <div class="page-content" ng-view></div>
 </div>
 
 

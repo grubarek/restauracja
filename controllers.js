@@ -14,12 +14,7 @@ appControllers.filter('startFrom', function () {
 });
 
 
-appControllers.controller("AdminCtrl", ['$scope', '$http', 'ProductRest', 'User', 'Users', function ($scope, $http, ProductRest, User, Users) {
-
-    $scope.users = [];
-    $scope.users = Users.query();
-    $scope.products = ProductRest.query();
-
+appControllers.controller("AdminCtrl", ['$scope', '$http', 'AddProductRest', function ($scope, $http, AddProductRest) {
 
     $scope.addProduct = function () {
         var newProduct = {
@@ -31,7 +26,7 @@ appControllers.controller("AdminCtrl", ['$scope', '$http', 'ProductRest', 'User'
             active: false
         };
         var data = new Date();
-        $scope.products.push(newProduct);
+        newProduct.creationDate = data;
         //TODO dodanie do db.
         AddProductRest.addProduct(newProduct);
         // Clear input fields after push
@@ -44,26 +39,11 @@ appControllers.controller("AdminCtrl", ['$scope', '$http', 'ProductRest', 'User'
     };
 
 
-    $scope.addUser = function () {
-        var newUser = {
-            firstName: $scope.firstName,
-            lastName: $scope.lastName,
-            nick: $scope.nick
-        };
-        $scope.users.push(newUser);
-        User.query(newUser);
-
-        $scope.firstName = '';
-        $scope.lastName = '';
-        $scope.nick = '';
-    };
-
 }]);
 
-appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'ProductRest', 'AddProductRest', 'BuyRest', 'BasketStorage',
-    function ($scope, $http, User, Users, ProductRest, AddProductRest, BuyRest, BasketStorage) {
 
-
+appControllers.controller("SliderCtrl", ['$scope', '$http',
+    function ($scope, $http) {
         $scope.slides = [
             {image: 'images/img00.jpg', description: 'Image 00'},
             {image: 'images/img01.jpg', description: 'Image 01'},
@@ -95,12 +75,19 @@ appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'P
         };
 
 
+    }]);
 
-// Add a Item to the list
+
+appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'ProductRest', 'AddProductRest', 'BuyRest', 'BasketStorage',
+    function ($scope, $http, User, Users, ProductRest, AddProductRest, BuyRest, BasketStorage) {
+
+
+// Add a Item to the order
 
         $scope.products = ProductRest.query();
+        $scope.shopingList = [];
 
-        $scope.productLog = function(){
+        $scope.productLog = function () {
             console.log("Saved product:");
             for (var i = 0; i < $scope.productList.length; i++) {
                 var currentProduct = $scope.productList[i];
@@ -112,8 +99,6 @@ appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'P
             console.log(product.toString());
             BasketStorage.addProduct(product)
         };
-
-
 
 
 // Get Total Items
@@ -158,17 +143,22 @@ appControllers.controller("postController", ['$scope', '$http', 'User', 'Users',
         // calling our submit function.
 
 
-
         $scope.submitForm = function () {
             // geting existing user or creating new one.
             User.query($scope.activeUser);
         };
 
-        $scope.buckedSumary = function () {
-            var tempSum;
-            $scope.productList.forEach(function (item) {
-                tempSum += item.price;
-            })
+        $scope.sum =$scope.productList[0].price;
+
+        $scope.orderSum = function () {
+            var tempSum = $scope.productList[0].price;
+            // $scope.productList.forEach(function (item) {
+            //     item.price
+            //     console.log(tempSum + " add to sum " + item.price);
+            //     tempSum += item.price;
+            // });
+            $scope.sum = tempSum;
+            return tempSum;
         };
 
         $scope.saveBasket = function () {

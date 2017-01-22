@@ -5,11 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-
-<div>
-
-    <h2>Dodawanie - Administracja menu</h2>
-    <p>TODO</p>
+<div id="addItem">
+    <h3>Formularz dodawania menu:</h3>
+    <input value="" type="text" placeholder="Nazwa" ng-model="art">
+    <input value="" type="text" placeholder="Opis" ng-model="description">
+    <input value="" type="text" placeholder="Cena" ng-model="price">
+    <input value="" type="text" placeholder="Kategoria" ng-model="category">
+    <br><br>
+    <button ng-click="addItem()"><i class="fa fa-shopping-cart" aria-hidden="true">Dodaj</i>
+    </button>
 </div>
 </body>
 </html>
