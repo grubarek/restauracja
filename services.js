@@ -30,11 +30,23 @@ appServices.service('ProductService', ['BaseApiUrl', 'ApiURL', function (BaseApi
 
 var appServices = angular.module('appServices', ['ngResource']);
 
-appServices.factory('ProductRest', function($resource) {
-    return $resource('http://localhost:5000/products', {}, {
+appServices.factory('Products', function($resource) {
+    return $resource('http://localhost:5000/product', {}, {
         query: {
             method: 'GET',
             isArray:true
+        }
+    });
+});
+
+
+appServices.factory('ProductRest', function($resource) {
+    return $resource('http://localhost:5000/product/:_id', {_id: '@id'}, {
+        update: {
+            method: 'PUT'
+        },
+        removeProduct: {
+            method : 'DELETE'
         }
     });
 });
@@ -47,41 +59,45 @@ appServices.factory('AddProductRest', function($resource) {
     });
 });
 
-appServices.factory('Users', ['$resource', function ($resource) {
-    return $resource('http://localhost:5000/user_list', {}, {
+appServices.factory('Reservation', ['$resource', function ($resource) {
+    return $resource('http://localhost:5000/reservation', {}, {
         query: {
             method: 'GET',
             isArray:true
-        }
-    });
-}
-]);
-
-appServices.factory('User', ['$resource', function ($resource) {
-    return $resource('http://localhost:5000/user/:userId', {}, {
-        query: {
-            method: 'POST'
         },
-        find: {
-            method: 'GET',
-            params: {_id: 'userId'}
+        addReservation: {
+            method : "POST"
         }
     });
 }
 ]);
 
-appServices.factory('Basket', ['$resource', function ($resource) {
-    return $resource('http://localhost:5000/basked/:userId', {}, {
+appServices.factory('OrderList', ['$resource', function ($resource) {
+    return $resource('http://localhost:5000/order', {}, {
         query: {
-            method: 'GET',
-            params: {userId: 'userId'}
+            method: 'GET'
         }
     });
 }
 ]);
 
-appServices.factory('BuyRest', ['$resource', function ($resource) {
-    return $resource('http://localhost:5000/buy', {}, {
+appServices.factory('Order', ['$resource', function ($resource) {
+    return $resource('http://localhost:5000/order/:orderId', {orderId: '@orderId'}, {
+        query: {
+            method: 'GET'
+        },
+        update: {
+            method: 'PUT'
+        },
+        removeOrder: {
+            method : 'DELETE'
+        }
+    });
+}
+]);
+
+appServices.factory('BuyOrder', ['$resource', function ($resource) {
+    return $resource('http://localhost:5000/order', {}, {
         buyQuery: {
             method: "POST"
         }
@@ -100,8 +116,17 @@ appServices.factory('BasketStorage', function() {
         return productList;
     };
 
+    var removeProduct = function (obj) {
+        for (var i = 0; i <productList.length; i++) {
+            if (productList[i] === obj)
+            productList.splice(i, 1);
+        }
+    };
+
+
     return {
         addProduct: addProduct,
-        getProducts: getProducts
+        getProducts: getProducts,
+        removeProduct : removeProduct
     };
 });

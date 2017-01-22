@@ -33,7 +33,7 @@
     <div class="order-sum">
         <label>Suma:</label>
         <output type="number" id="order_sum" name="order_sum" required>
-            {{sum}} zł
+            {{orderSum()}} zł
         </output>
     </div>
 
@@ -54,6 +54,7 @@
         <td>{{ product.description }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
+        <td><button class="button" ng-click="removeProductOrder(product)"><i class="fa fa-shopping-cart"  aria-hidden="true">Usuń</i>
     </tr>
 
 

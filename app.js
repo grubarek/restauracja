@@ -31,7 +31,7 @@ shopApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'ProductCtrl'
     }).when('/basket', {
         templateUrl: 'views/order.html',
-        controller: 'postController'
+        controller: 'OrderCtrl'
     }).when('/confirm', {
         templateUrl: 'views/confirm.html',
         controller: 'ProductCtrl'

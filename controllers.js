@@ -14,47 +14,55 @@ appControllers.filter('startFrom', function () {
 });
 
 
-appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProductRest', function ($scope, $window, $http, AddProductRest) {
+appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProductRest', 'ProductRest', 'Products',
+    function ($scope, $window, $http, AddProductRest, ProductRest, Products) {
 
-    $scope.files = [];
-    $scope.file = {};
+        $scope.files = [];
+        $scope.file = {};
+        $scope.productList = Products.query();
 
-    $scope.uploadFiles = function () {
+        $scope.uploadFiles = function () {
 
-        var files = angular.copy($scope.files);
+            var files = angular.copy($scope.files);
 
-        if ($scope.file) {
-            console.log("sucess: " + $scope.file.toString());
-        } else {
-            $window.alert('Please select files!');
-            return false;
-        }
-    };
-
-    $scope.addProduct = function () {
-        var newProduct = {
-            price: $scope.price,
-            description: $scope.description,
-            name: $scope.name,
-            category: $scope.category, //słownik ?
-            contentData: $scope.file.base64,
-            contentType: $scope.file.filetype
+            if ($scope.file) {
+                console.log("sucess: " + $scope.file.toString());
+            } else {
+                $window.alert('Please select files!');
+                return false;
+            }
         };
-        var data = new Date();
-        newProduct.creationDate = data;
-        //TODO dodanie do db.
-        AddProductRest.addProduct(newProduct);
-        // Clear input fields after push
-        $scope.price = '';
-        $scope.description = '';
-        $scope.art = '';
-        $scope.category = '';
-        $scope.data = "";
-        $scope.active = '';
-    };
+
+        $scope.removeProduct = function (product) {
+            var params = {_id: product._id};
+            ProductRest.removeProduct(params);
+        };
 
 
-}]);
+        $scope.addProduct = function () {
+            var newProduct = {
+                price: $scope.price,
+                description: $scope.description,
+                name: $scope.name,
+                category: $scope.category, //słownik ?
+                contentData: $scope.file.base64,
+                contentType: $scope.file.filetype
+            };
+            var data = new Date();
+            newProduct.creationDate = data;
+            //TODO dodanie do db.
+            AddProductRest.addProduct(newProduct);
+            // Clear input fields after push
+            $scope.price = '';
+            $scope.description = '';
+            $scope.art = '';
+            $scope.category = '';
+            $scope.data = "";
+            $scope.active = '';
+        };
+
+
+    }]);
 
 
 appControllers.controller("SliderCtrl", ['$scope', '$http',
@@ -93,13 +101,13 @@ appControllers.controller("SliderCtrl", ['$scope', '$http',
     }]);
 
 
-appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'ProductRest', 'AddProductRest', 'BuyRest', 'BasketStorage',
-    function ($scope, $http, User, Users, ProductRest, AddProductRest, BuyRest, BasketStorage) {
+appControllers.controller("ProductCtrl", ['$scope', '$http', 'ProductRest', 'Products', 'AddProductRest', 'BuyOrder', 'BasketStorage',
+    function ($scope, $http, ProductRest, Products, AddProductRest, BuyOrder, BasketStorage) {
 
 
 // Add a Item to the order
 
-        $scope.products = ProductRest.query();
+        $scope.products = Products.query();
         $scope.shopingList = [];
 
         $scope.productLog = function () {
@@ -150,31 +158,24 @@ appControllers.controller("ProductCtrl", ['$scope', '$http', 'User', 'Users', 'P
 
     }]);
 
-appControllers.controller("postController", ['$scope', '$http', 'User', 'Users', 'ProductRest', 'AddProductRest', 'BuyRest', 'BasketStorage',
-    function ($scope, $http, User, Users, ProductRest, AddProductRest, BuyRest, BasketStorage) {
+appControllers.controller("OrderCtrl", ['$scope', '$http', 'Order', 'OrderList', 'ProductRest', 'BuyOrder', 'BasketStorage',
+    function ($scope, $http, Order, OrderList, ProductRest, BuyOrder, BasketStorage) {
 
-        $scope.activeUser = {};
         $scope.productList = BasketStorage.getProducts();
         // calling our submit function.
 
-
-        $scope.submitForm = function () {
-            // geting existing user or creating new one.
-            User.query($scope.activeUser);
+        $scope.removeProductOrder = function (product) {
+            BasketStorage.removeProduct(product);
+            $scope.productList = BasketStorage.getProducts();
         };
 
-        $scope.sum = 0;
-
         $scope.orderSum = function () {
-            if ($scope.productList != null) {
-                var tempSum = $scope.productList[0].price;
-                // $scope.productList.forEach(function (item) {
-                //     item.price
-                //     console.log(tempSum + " add to sum " + item.price);
-                //     tempSum += item.price;
-                // });
-                $scope.sum = tempSum;
+            var tempSum = 0;
+            for (var i = 0; i < $scope.productList.length; i++) {
+                console.log(tempSum + " add to sum " + $scope.productList[i].price);
+                tempSum += $scope.productList[i].price;
             }
+            return tempSum;
         };
 
         $scope.saveBasket = function () {
@@ -197,7 +198,7 @@ appControllers.controller("postController", ['$scope', '$http', 'User', 'Users',
                     userId: $scope.activeUser._id,
                     productId: currentProduct._id
                 };
-                BuyRest.buyQuery(currentBasket);
+                BuyOrder.buyQuery(currentBasket);
                 $scope.basket.push(currentBasket);
             }
         };

@@ -12,8 +12,31 @@
     <input value="" type="number" placeholder="Cena" ng-model="price" required value="0.00" step="0.01" min="0" pattern="[0-9]+(\.[0-9][0-9]?)?">
     <input value="" type="text" placeholder="Kategoria" ng-model="category" required>
     <input class="form-control" type="file" ng-model="file" name="inputFile" base-sixty-four-input required maxsize="500" accept="image/*">
-    <button ng-click="addProduct()"><i class="fa fa-shopping-cart"  aria-hidden="true">Dodaj</i>
+    <button class="button" ng-click="addProduct()"><i class="fa fa-shopping-cart"  aria-hidden="true">Dodaj</i>
     </button>
+</div>
+
+<div>
+    <h3>Zarządzanie menu:</h3>
+
+    <table title="Dostępne potrawy" class="table table-bordered">
+        <tr>
+            <th>Zdjęcie</th>
+            <th>Opis</th>
+            <th>Potrawa</th>
+            <th>Cena</th>
+        </tr>
+        <tr ng-repeat="product in productList">
+            <td> <img src="data:{{product.contentType}};base64,{{product.contentData}}" width=100% /></td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td><button class="button" ng-click="removeProduct(product)"><i class="fa fa-shopping-cart"  aria-hidden="true">Usuń</i>
+            </button></td>
+        </tr>
+
+
+    </table>
 </div>
 </body>
 </html>
