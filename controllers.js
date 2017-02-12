@@ -71,8 +71,8 @@ appControllers.controller("AdminCtrl", ['$scope', '$window', '$http', 'AddProduc
     }]);
 
 
-appControllers.controller("SliderCtrl", ['$scope', '$http',
-    function ($scope, $http) {
+appControllers.controller("SliderCtrl", ['$scope',
+    function ($scope) {
         $scope.slides = [
             {image: 'images/img00.jpg', description: 'Image 00'},
             {image: 'images/img01.jpg', description: 'Image 01'},

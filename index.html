@@ -15,15 +15,6 @@
 
 
 <div class="container">
-    <ul class="topnav" id="myTopnav">
-        <li><a class="active" href="#products">Home</a></li>
-        <li><a href="#/basket">Zamówienia</a></li>
-        <li><a href="#/confirm">Rezerwacja</a></li>
-        <li><a href="#/administrate">Dla admina</a></li>
-        <li class="icon">
-            <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
-        </li>
-    </ul>
     <div class="container slider" ng-controller="SliderCtrl">
         <img ng-repeat="slide in slides" class="slide slide-animation nonDraggableImage"
              ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
@@ -41,6 +32,17 @@
             </div>
         </nav>
     </div>
+
+    <ul class="topnav" id="myTopnav">
+        <li><a class="active" href="#products">Home</a></li>
+        <li><a href="#/basket">Zamówienia</a></li>
+        <li><a href="#/confirm">Rezerwacja</a></li>
+        <li><a href="#/administrate">Dla admina</a></li>
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+        </li>
+    </ul>
+
 
     <div class="page-content" ng-view></div>
 </div>

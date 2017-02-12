@@ -25,7 +25,7 @@ shopApp.animation('.fade', function() {
 shopApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/products', {
         templateUrl: 'views/products.html',
-        controller: 'ProductCtrl'
+        controller: 'ProductCtrl', 
     }).when('/users', {
         templateUrl: 'views/administrate.html',
         controller: 'ProductCtrl'
